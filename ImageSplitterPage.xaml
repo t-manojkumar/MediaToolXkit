@@ -1,0 +1,40 @@
+<Page
+    x:Class="ToolX.ImageSplitterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="12" Spacing="8">
+            <TextBlock Text="Image Splitter" FontSize="24" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,12,0,0">
+                <Button x:Name="LoadButton" Content="Load Image" Click="LoadButton_Click"/>
+                <TextBlock Text="Rows:" VerticalAlignment="Center"/>
+                <NumberBox x:Name="RowsInput" Value="2" Minimum="1" Maximum="10" SpinButtonPlacementMode="Compact"/>
+                <TextBlock Text="Columns:" VerticalAlignment="Center"/>
+                <NumberBox x:Name="ColumnsInput" Value="2" Minimum="1" Maximum="10" SpinButtonPlacementMode="Compact"/>
+                <Button x:Name="SplitButton" Content="Split and Save" IsEnabled="False" Click="SplitButton_Click"/>
+            </StackPanel>
+            <Border Margin="0,12,0,0" BorderThickness="1" BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}">
+                <canvas:CanvasControl x:Name="ImageCanvas" Height="400" Draw="ImageCanvas_Draw"/>
+            </Border>
+        </StackPanel>
+
+        <Border Grid.Column="1" Width="1" Background="{ThemeResource SystemControlForegroundBaseLowBrush}" Margin="6,0,6,0"/>
+
+        <Grid Grid.Column="2" RowDefinitions="Auto, *">
+            <TextBlock Grid.Row="0" Text="Split Results" FontSize="24" FontWeight="Bold" Margin="12,12,12,0"/>
+            <GridView Grid.Row="1" x:Name="SplitResultsGrid" Margin="12"/>
+        </Grid>
+    </Grid>
+</Page>

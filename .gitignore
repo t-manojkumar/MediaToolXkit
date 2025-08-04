@@ -1,0 +1,19 @@
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+arm64/
+[Bb]in/
+[Oo]bj/
+AppPackages/
+Bundle/
+
+# Visual Studio temp files
+.vs/

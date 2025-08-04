@@ -1,0 +1,19 @@
+<Page
+    x:Class="ToolX.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Margin="24" Spacing="12">
+        <TextBlock Text="Settings" FontSize="24" FontWeight="Bold"/>
+        <TextBlock Text="App Theme" Style="{ThemeResource SubtitleTextBlockStyle}"/>
+        <RadioButtons x:Name="ThemeRadioButtons" Header="Choose a theme" SelectionChanged="ThemeRadioButtons_SelectionChanged">
+            <RadioButton Content="Light"/>
+            <RadioButton Content="Dark"/>
+            <RadioButton Content="Use system setting"/>
+        </RadioButtons>
+    </StackPanel>
+</Page>
