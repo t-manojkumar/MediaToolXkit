@@ -10,7 +10,7 @@
   <Identity
     Name="72b500e6-75fd-4713-b87d-47b8454797a5"
     Publisher="CN=tvman"
-    Version="1.0.0.0" />
+    Version="0.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="72b500e6-75fd-4713-b87d-47b8454797a5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
