@@ -14,6 +14,7 @@ arm64/
 [Oo]bj/
 AppPackages/
 Bundle/
+ToolX_TemporaryKey.pfx
 
 # Visual Studio temp files
 .vs/
