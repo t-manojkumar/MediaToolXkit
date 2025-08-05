@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using ToolX.Helpers;
 
 namespace ToolX
 {
@@ -13,6 +14,10 @@ namespace ToolX
             this.InitializeComponent();
             m_window = this;
             this.Title = "ToolX - Image & Video Toolkit";
+
+            // Apply the saved theme
+            var savedTheme = ThemeManager.LoadTheme();
+            ThemeManager.ApplyTheme(savedTheme);
 
             // Set Icons using C# code for reliability
             HomeNavItem.Icon = new SymbolIcon(Symbol.Home);
