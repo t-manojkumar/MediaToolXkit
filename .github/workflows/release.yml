@@ -1,53 +1,46 @@
-# Name of your workflow
 name: Build and Release ToolX
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow when a new tag is pushed (e.g., v1.0.1)
   push:
     tags:
       - 'v*.*.*'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-and-release:
-    # The type of runner that the job will run on
     runs-on: windows-latest
+    permissions:
+      contents: write
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # 1. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2. Sets up MSBuild, required for building a Windows App SDK project
+      # THIS IS THE NEW STEP THAT FIXES THE ERROR
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v2
 
-      # 3. Sets up NuGet for restoring dependencies
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1
+        uses: NuGet/setup-nuget@v2
 
-      # 4. Restores all NuGet packages
       - name: Restore NuGet packages
         run: nuget restore ToolX.sln
 
-      # 5. Builds the application for all architectures and creates the MSIX packages
       - name: Build MSIX Packages
         run: |
-          msbuild ToolX.sln /p:Configuration=Release /p:Platform=x86 /p:AppxPackageDir="./AppPackages/"
-          msbuild ToolX.sln /p:Configuration=Release /p:Platform=x64 /p:AppxPackageDir="./AppPackages/"
-          msbuild ToolX.sln /p:Configuration=Release /p:Platform=ARM64 /p:AppxPackageDir="./AppPackages/"
-
-      # 6. Creates a new GitHub Release and uploads the MSIX packages as assets
+          msbuild ToolX.sln /p:Configuration=Release /p:Platform=x86 /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
+          msbuild ToolX.sln /p:Configuration=Release /p:Platform=x64 /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
+          msbuild ToolX.sln /p:Configuration=Release /p:Platform=ARM64 /p:AppxPackageSigningEnabled=false /p:GenerateAppxPackageOnBuild=true
+        
       - name: Create Release and Upload Assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          # This tells the action to use the tag that triggered the workflow as the release name
           tag_name: ${{ github.ref }}
-          # This is the title of the release
           name: Release ${{ github.ref_name }}
-          # This will upload all .msix files from the AppPackages folder
-          files: ./AppPackages/**/*.msix
+          files: '**/bin/**/*.msix'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
