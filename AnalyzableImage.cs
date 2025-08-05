@@ -1,24 +1,41 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System.Collections.Generic;
 using Windows.Storage;
 
 namespace ToolX;
 
+// This has been changed to inherit from ObservableObject directly
 public partial class AnalyzableImage : ObservableObject
 {
-    [ObservableProperty]
-    private BitmapImage? thumbnail;
+    private BitmapImage? _thumbnail;
+    public BitmapImage? Thumbnail
+    {
+        get => _thumbnail;
+        set => SetProperty(ref _thumbnail, value);
+    }
 
-    [ObservableProperty]
-    private double sharpnessScore;
+    private double _sharpnessScore;
+    public double SharpnessScore
+    {
+        get => _sharpnessScore;
+        set => SetProperty(ref _sharpnessScore, value);
+    }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsBestVisibility))]
-    private bool isBest;
+    private bool _isBest;
+    public bool IsBest
+    {
+        get => _isBest;
+        set
+        {
+            if (SetProperty(ref _isBest, value))
+            {
+                OnPropertyChanged(nameof(IsBestVisibility)); // Manually notify that IsBestVisibility has changed
+            }
+        }
+    }
 
-    public Visibility IsBestVisibility => !IsBest ? Visibility.Collapsed : Visibility.Visible; 
+    public Visibility IsBestVisibility => IsBest ? Visibility.Visible : Visibility.Collapsed;
 
     public StorageFile? File { get; set; }
 }
