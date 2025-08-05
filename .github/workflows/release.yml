@@ -38,7 +38,7 @@ jobs:
           msbuild ToolX.sln /p:Configuration=Release /p:Platform=x86 /p:AppxPackageDir="./AppPackages/"
           msbuild ToolX.sln /p:Configuration=Release /p:Platform=x64 /p:AppxPackageDir="./AppPackages/"
           msbuild ToolX.sln /p:Configuration=Release /p:Platform=ARM64 /p:AppxPackageDir="./AppPackages/"
-        
+
       # 6. Creates a new GitHub Release and uploads the MSIX packages as assets
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v1
