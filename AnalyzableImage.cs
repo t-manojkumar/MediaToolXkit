@@ -5,7 +5,7 @@ using Windows.Storage;
 
 namespace ToolX;
 
-// This has been changed to inherit from ObservableObject directly
+// Your addition of the "partial" keyword is correct.
 public partial class AnalyzableImage : ObservableObject
 {
     private BitmapImage? _thumbnail;
@@ -30,7 +30,7 @@ public partial class AnalyzableImage : ObservableObject
         {
             if (SetProperty(ref _isBest, value))
             {
-                OnPropertyChanged(nameof(IsBestVisibility)); // Manually notify that IsBestVisibility has changed
+                OnPropertyChanged(nameof(IsBestVisibility));
             }
         }
     }
