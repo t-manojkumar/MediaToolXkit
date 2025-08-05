@@ -1,5 +1,5 @@
 # Name of your workflow
-name: Build and Release MediaToolXkit
+name: Build and Release ToolX
 
 # Controls when the workflow will run
 on:
@@ -30,14 +30,14 @@ jobs:
 
       # 4. Restores all NuGet packages
       - name: Restore NuGet packages
-        run: nuget restore MediaToolXkit.sln
+        run: nuget restore ToolX.sln
 
       # 5. Builds the application for all architectures and creates the MSIX packages
       - name: Build MSIX Packages
         run: |
-          msbuild MediaToolXkit.sln /p:Configuration=Release /p:Platform=x86 /p:AppxPackageDir="./AppPackages/"
-          msbuild MediaToolXkit.sln /p:Configuration=Release /p:Platform=x64 /p:AppxPackageDir="./AppPackages/"
-          msbuild MediaToolXkit.sln /p:Configuration=Release /p:Platform=ARM64 /p:AppxPackageDir="./AppPackages/"
+          msbuild ToolX.sln /p:Configuration=Release /p:Platform=x86 /p:AppxPackageDir="./AppPackages/"
+          msbuild ToolX.sln /p:Configuration=Release /p:Platform=x64 /p:AppxPackageDir="./AppPackages/"
+          msbuild ToolX.sln /p:Configuration=Release /p:Platform=ARM64 /p:AppxPackageDir="./AppPackages/"
         
       # 6. Creates a new GitHub Release and uploads the MSIX packages as assets
       - name: Create Release and Upload Assets
@@ -48,6 +48,6 @@ jobs:
           # This is the title of the release
           name: Release ${{ github.ref_name }}
           # This will upload all .msix files from the AppPackages folder
-          files: ./AppPackages/*.msix
+          files: ./AppPackages/**/*.msix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
